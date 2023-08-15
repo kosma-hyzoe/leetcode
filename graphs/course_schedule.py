@@ -46,4 +46,3 @@ class Solution:
                 if prerequisites_count[c] == 0:
                     q.append(c)
         return courses_taken == numCourses
-
