@@ -1,3 +1,6 @@
+# https://leetcode.com/problems/product-of-array-except-self/
+
+
 class Solution:
     def productExceptSelf(self, nums):
         pre = 1
@@ -12,4 +15,3 @@ class Solution:
             post *= nums[i]
 
         return res
-

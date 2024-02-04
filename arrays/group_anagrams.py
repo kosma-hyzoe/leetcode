@@ -1,8 +1,7 @@
-"""
-https://leetcode.com/problems/group-anagrams
-"""
+# https://leetcode.com/problems/group-anagrams
 
-from collections import Counter, defaultdict
+from collections import defaultdict
+
 
 class Solution:
     def groupAnagrams(self, strs):
@@ -13,6 +12,5 @@ class Solution:
             for c in s:
                 cc[ord(c) - ord('a')] += 1
             groups[tuple(cc)].append(s)
-
 
         return groups.values()

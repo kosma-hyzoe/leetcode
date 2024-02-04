@@ -1,15 +1,10 @@
-'''Return a deep copy (clone) of the graph.
+# https://leetcode.com/problems/clone-graph/
+
+"""Return a deep copy (clone) of the graph.
 
 Each node in the graph contains a value (int) and a list (List[Node]) of its
 neighbors.
-
-class Node {
-    public int val;
-    public List<Node> neighbors;
-}
-
-https://leetcode.com/problems/clone-graph/
-'''
+"""
 
 
 class Node:
@@ -19,10 +14,10 @@ class Node:
 
 
 class Solution:
+
     def cloneGraph(self, node: 'Node') -> 'Node':
         if not node:
             return None
-        copy = Node(node.val, [])
 
         q = [node]
         copy_dict = {node: Node(node.val)}

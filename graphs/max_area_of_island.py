@@ -1,17 +1,22 @@
+# https://leetcode.com/problems/max-area-of-island
+
 from collections import namedtuple
 
 P = namedtuple("Point", ['x', 'y'])
+
 
 class Solution:
     q = []
     # TODO change to a dict
     visited = []
+
     @staticmethod
     def inBounds(p, w, h):
         return 0 <= p.x < w and 0 <= p.y < h
 
     def checkNeigbors(self, p, grid):
-        nbrs = [P(p.x - 1, p.y), P(p.x + 1, p.y), P(p.x, p.y - 1), P(p.x, p.y + 1)]
+        nbrs = [P(p.x - 1, p.y), P(p.x + 1, p.y),
+                P(p.x, p.y - 1), P(p.x, p.y + 1)]
         for n in nbrs:
             if not Solution.inBounds(n, len(grid[0]), len(grid)):
                 continue
@@ -35,6 +40,8 @@ class Solution:
                     curr_size = 0
         return max_size
 
-print(
-    Solution().maxAreaOfIsland([[1,1,0,1,1],[1,0,0,0,0],[0,0,0,0,1],[1,1,0,1,1]])
-)
+
+Solution().maxAreaOfIsland([[1, 1, 0, 1, 1],
+                            [1, 0, 0, 0, 0],
+                            [0, 0, 0, 0, 1],
+                            [1, 1, 0, 1, 1]])

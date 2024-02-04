@@ -1,17 +1,22 @@
+# https://leetcode.com/problems/number-of-islands
+
 from collections import namedtuple
 
 P = namedtuple("Point", ['x', 'y'])
+
 
 class Solution:
     q = []
     # TODO change to a dict
     visited = []
+
     @staticmethod
     def inBounds(p, w, h):
         return 0 <= p.x < w and 0 <= p.y < h
 
     def checkNeigbors(self, p, grid):
-        nbrs = [P(p.x - 1, p.y), P(p.x + 1, p.y), P(p.x, p.y - 1), P(p.x, p.y + 1)]
+        nbrs = [P(p.x - 1, p.y), P(p.x + 1, p.y),
+                P(p.x, p.y - 1), P(p.x, p.y + 1)]
         for n in nbrs:
             if not Solution.inBounds(n, len(grid[0]), len(grid)):
                 continue
@@ -32,4 +37,8 @@ class Solution:
         return n_islands
 
 
-print(Solution().numIslands([["1","1","0","0","0"],["1","1","0","0","0"],["0","0","1","0","0"],["0","0","0","1","1"]]))
+print(Solution().numIslands([["1", "1", "0", "0", "0"],
+                             ["1", "1", "0", "0", "0"],
+                             ["0", "0", "1", "0", "0"],
+                             ["0", "0", "0", "1", "1"]]
+                            ))
