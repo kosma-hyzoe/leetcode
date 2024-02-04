@@ -18,6 +18,11 @@
 #define OPEN_P	"({["
 #define CLOSE_P	")}]"
 
+struct stack {
+	int top;
+	char s[];
+};
+
 int char_in(char c, char *s)
 {
 	for (int i = 0; s[i] != '\0'; i++)
@@ -39,13 +44,6 @@ int matches(char op, char cp)
 			return -1;
 	}
 }
-
-
-struct stack {
-	int top;
-	char s[];
-};
-
 
 struct stack *stack_init(int len)
 {
@@ -77,10 +75,14 @@ char stack_get(struct stack *st)
 	return st->s[st->top];
 }
 
+int stack_is_empty(struct stack *st)
+{
+	return st->top == -1;
+}
+
 bool isValid(char* s)
 {
 	char p;
-	int ret;
 	int len = strlen(s);
 	struct stack *st = stack_init(len);
 
@@ -107,8 +109,8 @@ bool isValid(char* s)
 
 	}
 
-	printf("%d\n", st->top);
-	ret = st->top == -1 ? true : false;
+	if (!stack_is_empty(st))
+			return false;
 	free(st);
-	return ret;
+	return true;
 }

@@ -1,14 +1,20 @@
 # https://leetcode.com/problems/valid-parentheses
 
-MATCH = {'(': ')', '{': '}', '[': ']'}
+MATCH = {'}': '{', ']': '[', ')': '('}
 
 
 class Solution:
     def isValid(self, s: str) -> bool:
-        s = list(s)
-        st = [s.pop(0)]
-        if st[0] in MATCH.values():
-            return False
+        st = []
+        for c in s:
+            if c in MATCH:
+                if st and st[-1] == MATCH[c]:
+                    st.pop()
+                else:
+                    return False
+            else:
+                st.append(c
+
 
         while s:
             p = s.pop(0)
