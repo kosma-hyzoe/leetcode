@@ -14,14 +14,31 @@ class Solution:
         li = 0
         ri = lenn - 1
 
-        while numbers[ri] > target + numbers[li]:
+        def _sum():
+            return numbers[li] + numbers[ri]
+
+        sum = _sum()
+        while sum > target:
             ri -= 1
+            sum = numbers[li] + numbers[ri]
+            if sum == target:
+                return [li + 1, ri + 1]
+        while sum > target:
+            li += 1
+            sum = numbers[li] + numbers[ri]
+            if sum == target:
+                return [li + 1, ri + 1]
 
         while True:
-            while li < lenn:
-                if numbers[li] + numbers[ri] == target:
-                    return [li + 1, ri + 1] if li < ri else [ri + 1, li + 1]
+            sum = numbers[li] + numbers[ri]
+            if sum < target:
                 li += 1
-            ri -= 1
+            elif sum > target:
+                ri -= 1
+            else:
+                return [li + 1, ri + 1]
 
-        return 1
+        return -1
+
+
+assert Solution().twoSum([5, 25, 75], 100) == [2, 3]
