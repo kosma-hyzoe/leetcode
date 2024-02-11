@@ -99,14 +99,12 @@ bool isValid(char* s)
 		if (char_in(p, OPEN_P))
 			stack_push(st, p);
 
-		if (st->top == -1) {
+		if (st->top == -1)
 			return false;
-		} else if (matches(stack_get(st), p)) {
+		else if (matches(stack_get(st), p))
 			stack_pop(st);
-		} else if (char_in(p, CLOSE_P)) {
+		else if (char_in(p, CLOSE_P))
 			return false;
-		}
-
 	}
 
 	if (!stack_is_empty(st))
