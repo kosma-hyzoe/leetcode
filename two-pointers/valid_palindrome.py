@@ -2,17 +2,19 @@
 
 class Solution:
     def isPalindrome(self, s):
-        pb = 0
-        pe = -1
+        s = "".join(c.lower() for c in s if c.isalnum())
+        lens = len(s)
+        pr = 0
+        pl = lens - 1
 
-        s = "".join(c for c in s if c.isalnum())
-        while pb < len(s):
-            if s[pb].lower() != s[pe].lower():
+        if lens < 2:
+            return True
+
+        while pr < pl:
+            print(s[pr], s[pl])
+            if s[pr] != s[pl]:
                 return False
-            pb += 1
-            pe -= 1
+            pr += 1
+            pl -= 1
 
         return True
-
-
-assert Solution().isPalindrome("A man, a plan, a canal: Panama")
