@@ -8,15 +8,15 @@
 
 int isPalindrome(char* s)
 {
-	int l = 0;
-	int r = strlen(s) - 1;
+	char *l = s;
+	char *r = s + strlen(s);
 
 	while (l < r) {
-		while (!isalnum(s[l]) && l < r)
+		while (!isalnum(*l) && l < r)
 			l++;
-		while (!isalnum(s[r]) && l < r)
+		while (!isalnum(*r) && l < r)
 			r--;
-		if (tolower(s[l++]) != tolower(s[r--]))
+		if (tolower(*(l++)) != tolower(*(r--)))
 			return FALSE;
 	}
 	return TRUE;
