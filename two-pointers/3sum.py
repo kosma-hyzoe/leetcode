@@ -9,27 +9,31 @@ and nums[i] + nums[j] + nums[k] == 0.
 
 class Solution:
     def threeSum(self, nums):
-        def _sum():
-            return nums[li] + nums[ri]
-
-        def _3rd(li, ri):
-            return 0 - (nums[li] + nums[ri])
-
-        thirds = []
-        lenn = len(nums)
-        nums = sorted(nums)
+        triplets = []
 
         li = 0
-        ri = lenn - 1
+        visited = []
+        nums = sorted(nums)
+        ri = len(nums) - 1
 
-        while nums[li] < 0 and li != ri:
-            third = _3rd(li, ri)
-            if third in nums[li + 1:ri]:
-                thirds.append([nums[li], third, nums[ri]])
+        print(nums)
+        while True:
+            if nums[li] not in visited:
+                visited.append(nums[li])
 
-            if third > nums[ri]:
-                li += 1
-            else:
-                ri += 1
+                tri_visited = []
+                for tri in range(ri, li + 1, -1):
+                    if nums[tri] in tri_visited:
+                        continue
+                    tri_visited.append(nums[tri])
 
-        return thirds
+                    third = 0 - (nums[li] + nums[tri])
+                    if third in nums[li + 1:tri]:
+                        triplets.append([nums[li], third, nums[tri]])
+
+            if li == ri - 2 or nums[li + 1] > 0:
+                return triplets
+            li += 1
+
+
+print(Solution().threeSum([-1,0,1,2,-1,-4]))
