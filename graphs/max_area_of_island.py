@@ -1,47 +1,43 @@
-# https://leetcode.com/problems/max-area-of-island
+#!/usr/bin/python3
+"""
+https://leetcode.com/problems/max-area-of-island
 
-from collections import namedtuple
+"""
 
-P = namedtuple("Point", ['x', 'y'])
+import queue
 
 
 class Solution:
-    q = []
-    # TODO change to a dict
-    visited = []
-
-    @staticmethod
-    def inBounds(p, w, h):
-        return 0 <= p.x < w and 0 <= p.y < h
-
-    def checkNeigbors(self, p, grid):
-        nbrs = [P(p.x - 1, p.y), P(p.x + 1, p.y),
-                P(p.x, p.y - 1), P(p.x, p.y + 1)]
-        for n in nbrs:
-            if not Solution.inBounds(n, len(grid[0]), len(grid)):
-                continue
-            elif grid[n.y][n.x] == 1 and (n.x, n.y) not in self.visited:
-                self.visited.append(P(n.x, n.y))
-                self.q.append(P(n.x, n.y))
+    cur = 0
+    max = 0
 
     def maxAreaOfIsland(self, grid):
-        max_size = 0
-        curr_size = 0
-        for y in range(len(grid)):
-            for x in range(len(grid[0])):
-                if grid[y][x] == 1 and (x, y) not in self.visited:
-                    self.visited.append(P(x, y))
-                    self.q.append(P(x, y))
-                    while self.q:
-                        curr_size += 1
-                        self.checkNeigbors(self.q.pop(0), grid)
-                    if curr_size > max_size:
-                        max_size = curr_size
-                    curr_size = 0
-        return max_size
+        visited = set()
+        h, w = len(grid), len(grid[0])
 
+        def bfs(r, c):
+            q = queue.deque()
+            visited.add((r, c))
+            q.append((r, c))
 
-Solution().maxAreaOfIsland([[1, 1, 0, 1, 1],
-                            [1, 0, 0, 0, 0],
-                            [0, 0, 0, 0, 1],
-                            [1, 1, 0, 1, 1]])
+            while q:
+                ro, co = q.popleft()
+                d = [(ro - 1, co), (ro + 1, co), (ro, co - 1), (ro, co + 1)]
+                for n in d:
+                    if h > n[0] >= 0 and w > n[1] >= 0  \
+                        and grid[n[0]][n[1]] == 1 and \
+                            (n[0], n[1]) not in visited:
+                        q.append(n)
+                        self.cur += 1
+                        visited.add(n)
+
+        for r in range(0, len(grid)):
+            for c in range(0, len(grid[r])):
+                if grid[r][c] == 1 and (r, c) not in visited:
+                    visited.add((r, c))
+                    self.cur = 1
+                    bfs(r, c)
+                    if self.cur > self.max:
+                        self.max = self.cur
+
+        return self.max

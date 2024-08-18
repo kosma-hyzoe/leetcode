@@ -9,31 +9,23 @@ and nums[i] + nums[j] + nums[k] == 0.
 
 class Solution:
     def threeSum(self, nums):
-        triplets = []
+        sol = []
+        nums.sort()
+        for i, v in enumerate(nums):
+            if i > 0 and v == nums[i - 1]:
+                continue
 
-        li = 0
-        visited = []
-        nums = sorted(nums)
-        ri = len(nums) - 1
+                l, r = i + 1, len(nums) - 1
+                while l < r:
+                    threeSum = v + nums[l] + nums[r]
+                    if threeSum > 0:
+                        r -= 1
+                    elif threeSum < 0:
+                        l += 1
+                    else:
+                        sol.append([nums[l], v, nums[r]])
+                        l += 1
+                        while nums[l] == nums[l - 1] and l < r:
+                            l += 1
 
-        print(nums)
-        while True:
-            if nums[li] not in visited:
-                visited.append(nums[li])
-
-                tri_visited = []
-                for tri in range(ri, li + 1, -1):
-                    if nums[tri] in tri_visited:
-                        continue
-                    tri_visited.append(nums[tri])
-
-                    third = 0 - (nums[li] + nums[tri])
-                    if third in nums[li + 1:tri]:
-                        triplets.append([nums[li], third, nums[tri]])
-
-            if li == ri - 2 or nums[li + 1] > 0:
-                return triplets
-            li += 1
-
-
-print(Solution().threeSum([-1,0,1,2,-1,-4]))
+print(Solution().threeSum([0, 1, 1]))
