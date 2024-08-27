@@ -28,22 +28,20 @@ class Solution:
                 return
             vis.add(course)
 
-            q = deque(preq_dict[course])
-            while q:
-                curr = q.popleft()
-                preqs = preq_dict[curr]
-                preqs = [c for c in preqs if c not in taken]
+            preqs = preq_dict[course]
+            preqs = deque([c for c in preqs if c not in taken])
+            while preqs:
+                if not bfs(preqs.popleft()):
+                    return False
 
-                if len(to_take) == 0:
-                    taken.add(curr)
-                    if len(taken) >= numCourses:
-                        return True
-                else:
-                    q.extend([cc for cc in to_take if cc not in vis])
-            if
+            taken.add(course)
+            return True
 
-        for c in to_take():
-            bfs(c)
+        for c in to_take:
+            if not bfs(c):
+                return False
+
+        return True
 
 
 p = [[0, 1], [0, 2], [1, 2]]
