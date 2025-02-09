@@ -1,40 +1,26 @@
-
-
 class Solution:
     def validTree(self, n: int, edges):
-        nbrs = {}
-        cur = None
+        if len(edges) > (n - 1):
+            return False
+
+        nbrs = [[] for _ in range(n)]
+        for u, v in edges:
+            nbrs[u].append(v)
+            nbrs[v].append(u)
+
         vis = set()
 
-        for a, b in edges:
-            if a in nbrs:
-                nbrs[a].append(b)
-            else:
-                nbrs[a] = [b]
-            if b in nbrs:
-                nbrs[b].append(a)
-            else:
-                nbrs[b] = [a]
-
-        # print(nbrs)
-        # for d in nbrs:
-        #     print(d, nbrs[d])
-
-        def dfs(i, p):
-            if i in vis or len(nbrs[i]) == 1:
-                return
-            vis.add(i)
-
-            for nbr in nbrs[i][::-1]:
-                if nbr in vis:
-                    return 1
-                dfs(nbr, i)
-
-        for i in nbrs:
-            cur = i
-            # print(cur)
-            if dfs(cur, None):
+        def dfs(cur, prev):
+            if cur in vis:
                 return False
-            vis = set()
+            vis.add(cur)
 
-        return True
+            for nbr in nbrs[cur]:
+                if nbr == prev:
+                    continue
+                if not dfs(nbr, cur):
+                    return False
+            return True
+
+        return dfs(0, -1) and len(vis) == n
+
