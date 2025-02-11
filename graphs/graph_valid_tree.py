@@ -1,9 +1,10 @@
-from queue import Queue
 
 
 class Solution:
     def validTree(self, n: int, edges):
         nbrs = {}
+        cur = None
+        vis = set()
 
         for a, b in edges:
             if a in nbrs:
@@ -15,29 +16,24 @@ class Solution:
             else:
                 nbrs[b] = [a]
 
-        for d in nbrs:
-            print(d, nbrs[d])
+        # print(nbrs)
+        # for d in nbrs:
+        #     print(d, nbrs[d])
 
-        q = Queue([0])
-        vis = set()
-        while q:
-            c = q.pop()
-
-        def bfs(i):
-            if i in vis:
+        def dfs(i, p):
+            if i in vis or len(nbrs[i]) == 1:
                 return
             vis.add(i)
 
-            for nbr in nbrs[i]:
-                if cur == 2:
-                    print(nbr)
-                if nbr == cur:
+            for nbr in nbrs[i][::-1]:
+                if nbr in vis:
                     return 1
-                bfs(nbr)
+                dfs(nbr, i)
 
-        for i in range(n):
+        for i in nbrs:
             cur = i
-            if bfs(i):
+            # print(cur)
+            if dfs(cur, None):
                 return False
             vis = set()
 
