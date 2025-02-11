@@ -1,7 +1,5 @@
-# foobar
 class Solution:
     land_touches_border = False
-    land = []
 
     def solve(self, board):
         ROWS, COLS = len(board), len(board[0])
@@ -11,11 +9,13 @@ class Solution:
         def in_range(r, c):
             return r >= 0 and r < ROWS and c >= 0 and c < COLS
 
+        land = []
+
         def look_for_border(r, c):
             if (r, c) in vis:
                 return
 
-            self.land.append((r, c))
+            land.append((r, c))
             vis.add((r, c))
             nbrs = [(r + 1, c), (r, c + 1), (r - 1, c), (r, c - 1)]
             for nbr in nbrs:
@@ -31,8 +31,8 @@ class Solution:
                     look_for_border(r, c)
 
                     if not self.land_touches_border:
-                        for lr, lc in self.land:
+                        for lr, lc in land:
                             print(lr, lc)
                             board[lr][lc] = "X"
                     self.land_touches_border = False
-                    self.land = []
+                    land = []
